@@ -1,0 +1,28 @@
+<p>Pokemon Page</p>
+<p>Module name: {{ moduleName }}</p>
+<p>Pokemon name: {{ pokemonName }}</p>
+<ng-container *ngFor="let pokemon of favouritePokemons">
+  <p>{{ pokemon.name }}</p>
+</ng-container>
+<input (keyup)="changeName($event)" [(ngModel)]="pokemonName" />
+<button (click)="addCharizard()">Add charizard to favourites</button>
+
+<hr />
+
+<input [(ngModel)]="name" />
+<button (click)="onSearchPokemon()">Search</button>
+
+<p>{{ counter }}</p>
+
+<ng-container *ngIf="loading">
+  <p>Loading...</p>
+</ng-container>
+
+<ng-container *ngIf="fetchedPokemon">
+  <p>{{ fetchedPokemon.name }}</p>
+  <img [src]="fetchedPokemon.sprites.front_default" alt="Front female image" />
+</ng-container>
+
+<ng-container *ngIf="error">
+  <p>Ups... Something went wrong</p>
+</ng-container>

@@ -1,0 +1,25 @@
+<h1>Welcome!</h1>
+<video autoplay muted loop id="video-background">
+    <source src="https://assets.pokemon.com//assets/cms2/img/misc/virtual-backgrounds/animation/ash-ready-for-battle.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+<form class="login-form" [formGroup]="loginForm" (submit)="onLogin($event)" >
+        <mat-form-field class="example-full-width">
+          <mat-label for="username">Username</mat-label>
+          <input matInput formControlName="username" id="username" placeholder="Username"/>
+            <mat-error *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.hasError('required')">Please enter a valid email username</mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label for="password">Password</mat-label>
+          <input matInput formControlName="password" id="password" placeholder="Password"/>
+          <mat-error *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')">Please enter a valid email password</mat-error>
+        </mat-form-field>
+
+    <ng-container *ngIf="!loading; else spinner">
+        <button class="login-button" mat-button type="submit">Login</button>
+    </ng-container>
+</form>
+
+<ng-template #spinner>
+    <mat-spinner class="spinner" color="warn" diameter="24"></mat-spinner>
+</ng-template>

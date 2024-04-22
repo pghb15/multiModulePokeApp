@@ -1,0 +1,69 @@
+<div class="search-container">
+  <input
+    class="search-box"
+    type="text"
+    [(ngModel)]="searchValue"
+    placeholder="Search Pokemon..."
+  />
+  <button mat-flat-button color="warn" (click)="searchPokemon()" class="search-button">Search</button>
+
+  <form action="#">
+    <label for="filter">Filter:</label>
+    <select name="Type" id="pokemon-types" [(ngModel)]="filterValue">
+      <option value="water">Water</option>
+      <option value="grass">Grass</option>
+      <option value="fire">Fire</option>
+      <option value="electric">Electric</option>
+    </select>
+    <button
+      type="button" mat-flat-button color="warn"
+      (click)="filterPokemonsByType()"
+      class="filter-button"
+    >
+      Filter
+    </button>
+    <button mat-flat-button color="warn" type="button" (click)="cleanFilter()" class="filter-button">
+      Clean Filter
+    </button>
+  </form>
+</div>
+
+<!-- Filtro de búsqueda -->
+<div class="grid-container">
+  <!-- Mostrar el Pokémon encontrado si existe -->
+  <ng-container *ngIf="foundPokemon">
+    <app-pokemon-card [pokemon]="foundPokemon"></app-pokemon-card>
+    <div class="back-button">
+      <button mat-flat-button color="warn" (click)="goBack()" class="search-button">Back</button>
+    </div>
+  </ng-container>
+
+  <!-- Mostrar los pokemons filtrados si existen -->
+  <ng-container *ngIf="filteredPokemons">
+    <ng-container *ngFor="let pokemon of filteredPokemons">
+      <app-pokemon-card [pokemon]="pokemon"></app-pokemon-card>
+    </ng-container>
+  </ng-container>
+
+  <!-- Si no hay pokemons filtrados y no se ha encontrado ningún Pokémon, mostrar los primeros 20.
+   SOLUCIONADO EL PROBLEMA DE MOSTRAR LOS 20 PRIMEROS: Si el array es 0 que muestre los 20 pokemons iniciales -->
+  <ng-container
+    *ngIf="
+      !foundPokemon && (!filteredPokemons || filteredPokemons.length === 0)
+    "
+  >
+    <ng-container *ngFor="let pokemon of pokemons">
+      <app-pokemon-card [pokemon]="pokemon"></app-pokemon-card>
+    </ng-container>
+  </ng-container>
+</div>
+
+<!-- Botón Load more. Deshabilitar cuando encuentre un pokemon -->
+<div *ngIf="!foundPokemon" class="buttons-front">
+  <button mat-flat-button color="warn" (click)="loadMorePokemons()" class="next-button">Load more</button>
+</div>
+
+<!-- El atributo [(ngModel)] establece una comunicación bidireccional 
+  entre el input y la variable searchValue en el componente. 
+  Esto significa que cualquier cambio en el input se reflejará en la variable, 
+  y cualquier cambio en la variable se reflejará en el input. -->
